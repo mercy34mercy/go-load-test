@@ -25,9 +25,10 @@ func main() {
 	defer client.Close()
 
 	// 接続プールの設定
-	client.SetMaxOpenConns(80)
-	client.SetMaxIdleConns(40)
-	client.SetConnMaxLifetime(60 * time.Minute)
+	client.SetMaxOpenConns(50)
+	client.SetMaxIdleConns(30)
+	client.SetConnMaxIdleTime(5 * time.Minute)
+	client.SetConnMaxLifetime(5 * time.Minute)
 
 	userRepo := psql.NewUserRepository(client)
 
