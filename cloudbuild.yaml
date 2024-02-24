@@ -1,0 +1,28 @@
+serviceAccount: "cloudrun@research-383706.iam.gserviceaccount.com"
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/research-383706/github.com/mercy34mercy/go-load-test:$COMMIT_SHA', '-f', Dockerfile, '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/research-383706/github.com/mercy34mercy/go-load-test:$COMMIT_SHA']
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - 'gcloud run deploy go-load-test --image gcr.io/research-383706/github.com/mercy34mercy/go-load-test --region us'
+
+- id: delete-old-images
+  name: asia-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli:latest
+  args:
+  # 削除するリポジトリ名
+  - --repo=gcr.io/research-383706/github.com/mercy34mercy/go-load-test
+  # 最新の3つだけを残す場合
+  - --keep=3
+  # 削除対象とするタグの正規表現。ここではすべてのイメージを対象とする
+  - --tag-filter-any=.*
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+- 'gcr.io/research-383706/github.com/mercy34mercy/go-load-test:$COMMIT_SHA'
