@@ -9,7 +9,7 @@ steps:
   entrypoint: 'bash'
   args:
   - '-c'
-  - 'gcloud run deploy go-load-test --image gcr.io/research-383706/github.com/mercy34mercy/go-load-test'
+  - 'gcloud run deploy go-load-test --image gcr.io/research-383706/github.com/mercy34mercy/go-load-test --region asia-northeast1'
 
 - id: delete-old-images
   name: asia-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli:latest
