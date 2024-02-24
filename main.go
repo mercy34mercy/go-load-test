@@ -16,8 +16,8 @@ import (
 
 func main() {
 	// psqlのcliを生成
-	client, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s pool_max_conns=%s", config.POSTGRESQL_HOST(), config.POSTGRESQL_PORT(), config.POSTGRESQL_USER_NAME(), config.POSTGRESQL_PASSWORD(), config.POSTGRESQL_DB_NAME(), config.POSTGRESQL_MAX_POOL_CONNS()))
-	if err != nil {	
+	client, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s", config.POSTGRESQL_HOST(), config.POSTGRESQL_PORT(), config.POSTGRESQL_USER_NAME(), config.POSTGRESQL_PASSWORD(), config.POSTGRESQL_DB_NAME()))
+	if err != nil {
 		log.Fatal("failed to connect to database %w", err)
 	}
 	defer client.Close()
