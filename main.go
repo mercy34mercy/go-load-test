@@ -29,5 +29,5 @@ func main() {
 	http.HandleFunc("GET /health", health.HealthHandler())
 	http.HandleFunc("POST /user", v1.CreateUserHandler(usecase.NewSaveUser(*userRepo)))
 	http.HandleFunc("GET /user/{user_id}", v1.GetUserHandler(usecase.NewGetUserByID(*userRepo)))
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8000", nil)
 }
