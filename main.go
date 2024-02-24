@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"net/http"
 
@@ -22,6 +23,11 @@ func main() {
 		log.Fatal(err, fmt.Errorf("failed to connect to database: %w", err))
 	}
 	defer client.Close()
+
+	// 接続プールの設定
+	client.SetMaxOpenConns(1)
+	client.SetMaxIdleConns(1)
+	client.SetConnMaxLifetime(0 * time.Minute)
 
 	userRepo := psql.NewUserRepository(client)
 
